@@ -15,6 +15,17 @@ class UserInputException extends Exception {
 	}
 }
 
+class MatrixOutOfBoundsException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public MatrixOutOfBoundsException (String errorMessage) {
+		super (errorMessage);
+	}
+}
+
 public class matrixcustomhandlers {
 
 	private static String[][] rolls = {
@@ -51,18 +62,23 @@ public class matrixcustomhandlers {
 		System.out.println();
 	}
 	
-	public static void printGrid(PrintStream output) {
-		System.setOut(output);
-		String[] firstLine = {"*", "Die 1", "Die 2", "Die 3", "Die 4", "Die 5", "Die 6"};
-		printLine(firstLine);
-		for (int row=0; row<rolls.length; row++) {
-			String[] label = { String.format("Die %d", row+1) };
-			printLine( concatArrays(label, rolls[row]) );
+	public static void printGrid(PrintStream output) throws MatrixOutOfBoundsException{
+		try {
+			System.setOut(output);
+			String[] firstLine = {"*", "Die 1", "Die 2", "Die 3", "Die 4", "Die 5", "Die 6"};
+			printLine(firstLine);
+			for (int row=0; row<rolls.length; row++) {
+				String[] label = { String.format("Die %d", row+1) };
+				printLine( concatArrays(label, rolls[row]) );
+			}
+		} catch (IndexOutOfBoundsException e) {
+			throw new MatrixOutOfBoundsException("Error when referring to a matrix element.");
 		}
+		
 	}
 	
 	
-	private static boolean getInput(Scanner scan) {
+	private static boolean getInput(Scanner scan) throws MatrixOutOfBoundsException, UserInputException, FileNotFoundException, IOError {
 		PrintStream console = System.out;
 		try {
 			String inputString = "";
@@ -97,16 +113,16 @@ public class matrixcustomhandlers {
 			
 		}
 		catch(IOError e) {
-			System.setOut(console);
-			System.out.println("I/O Error: " + e);
+			throw e;
 		}
 		catch(FileNotFoundException e) {
-			System.setOut(console);
-			System.out.println("File Not Found Error: " + e);
+			throw e;
 		}
 		catch (UserInputException e) {
-			System.setOut(console);
-			System.out.println("User Input Error: " + e);
+			throw e;
+		}
+		catch (MatrixOutOfBoundsException e) {
+			throw e;
 		}
 		return true;
 		
@@ -120,12 +136,31 @@ public class matrixcustomhandlers {
 		
 		Scanner scan = new Scanner(System.in);	
 		PrintStream console = System.out;
+		boolean quit = false;
 		
-		do {
+		while (!quit) {
 			System.setOut(console);
 			System.out.print(MESSAGE);
+			try {
+				quit = (!getInput(scan));
+			}
+			catch (IOError e) {
+				System.setOut(console);
+				System.out.println("IO Error: " + e);
+			}
+			catch (FileNotFoundException e) {
+				System.setOut(console);
+				System.out.println("File Not Found Exception: " + e);
+			}
+			catch (MatrixOutOfBoundsException e) {
+				System.setOut(console);
+				System.out.println("Matrix Out of Bounds Exception: " + e);
+			}
+			catch (UserInputException e) {
+				System.setOut(console);
+				System.out.println("User Input Exception: " + e);
+			}
 		}
-		while (getInput(scan));
 	}
 
 }
