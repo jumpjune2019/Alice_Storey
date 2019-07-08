@@ -18,6 +18,8 @@ public class matrixchoice {
 			{"The Devil", "Easy eight", "Lou Brown", "Tennessee", "Six five no jive", "Midnight"}
 	};
 	
+	private final static String FILENAME = "dicelabels.txt";
+	
 	private static String[] concatArrays(String[] a, String[] b) {
 		String[] result = new String[a.length + b.length];
 		
@@ -41,7 +43,8 @@ public class matrixchoice {
 		System.out.println();
 	}
 	
-	public static void printGrid() {
+	public static void printGrid(PrintStream output) {
+		System.setOut(output);
 		String[] firstLine = {"*", "Die 1", "Die 2", "Die 3", "Die 4", "Die 5", "Die 6"};
 		printLine(firstLine);
 		for (int row=0; row<rolls.length; row++) {
@@ -50,9 +53,6 @@ public class matrixchoice {
 		}
 	}
 	
-	private static void printFile() {
-		
-	}
 	
 	private static boolean getInput(Scanner scan) {
 		String inputString = "";
@@ -60,22 +60,38 @@ public class matrixchoice {
 			inputString = scan.nextLine();
 		}
 		char input = inputString.charAt(0);
-		
-		switch (input) {
-			case 'q':
-				return false;
-			case 'Q':
-				return false;
-			case '1':
-				printGrid();
-				break;
-			case '2':
-				printFile();
-				break;
-			case '3':
-				printGrid();
-				printFile();
-				break;
+		try {
+			PrintStream fileout;
+			PrintStream console = System.out;
+			switch (input) {
+				case 'q':
+					return false;
+				case 'Q':
+					return false;
+				case '1':
+					printGrid(console);
+					break;
+				case '2':
+					fileout = new PrintStream(new File(FILENAME)); 
+					printGrid(fileout);
+					fileout.close();
+					break;
+				case '3':
+					printGrid(console);
+					fileout = new PrintStream(new File(FILENAME)); 
+					printGrid(fileout);
+					fileout.close();
+					break;
+			}
+			
+		}
+		catch(IOError e) {
+			System.setOut(System.out);
+			System.out.println("I/O Error: " + e);
+		}
+		catch(FileNotFoundException e) {
+			System.setOut(System.out);
+			System.out.println("File Not Found Error: " + e);
 		}
 		return true;
 		
@@ -88,8 +104,10 @@ public class matrixchoice {
 		final String MESSAGE = "\nOptions - (1) print to screen  (2) print to file  (3) both  (q) quit:";
 		
 		Scanner scan = new Scanner(System.in);	
+		PrintStream console = System.out;
 		
 		do {
+			System.setOut(console);
 			System.out.print(MESSAGE);
 		}
 		while (getInput(scan));
