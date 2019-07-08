@@ -15,7 +15,7 @@ public class matrixcustomhandlers {
 			{"The Devil", "Easy eight", "Lou Brown", "Tennessee", "Six five no jive", "Midnight"}
 	};
 	
-	private final static String FILENAME = "dicelabels.txt";
+	private final static String FILENAME = "dice_labels.txt";
 	
 	private static String[] concatArrays(String[] a, String[] b) {
 		String[] result = new String[a.length + b.length];
