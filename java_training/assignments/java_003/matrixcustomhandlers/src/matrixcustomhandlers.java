@@ -4,6 +4,17 @@ import java.io.IOError;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+class UserInputException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public UserInputException (String errorMessage) {
+		super (errorMessage);
+	}
+}
+
 public class matrixcustomhandlers {
 
 	private static String[][] rolls = {
@@ -52,14 +63,15 @@ public class matrixcustomhandlers {
 	
 	
 	private static boolean getInput(Scanner scan) {
-		String inputString = "";
-		while (inputString.length() < 1) {
-			inputString = scan.nextLine();
-		}
-		char input = inputString.charAt(0);
+		PrintStream console = System.out;
 		try {
+			String inputString = "";
+			while (inputString.length() < 1) {
+				inputString = scan.nextLine();
+			}
+			char input = inputString.charAt(0);
+		
 			PrintStream fileout;
-			PrintStream console = System.out;
 			switch (input) {
 				case 'q':
 					return false;
@@ -79,16 +91,22 @@ public class matrixcustomhandlers {
 					printGrid(fileout);
 					fileout.close();
 					break;
+				default:
+					throw new UserInputException("Did not recognize user input.");
 			}
 			
 		}
 		catch(IOError e) {
-			System.setOut(System.out);
+			System.setOut(console);
 			System.out.println("I/O Error: " + e);
 		}
 		catch(FileNotFoundException e) {
-			System.setOut(System.out);
+			System.setOut(console);
 			System.out.println("File Not Found Error: " + e);
+		}
+		catch (UserInputException e) {
+			System.setOut(console);
+			System.out.println("User Input Error: " + e);
 		}
 		return true;
 		
