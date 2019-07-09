@@ -146,19 +146,19 @@ public class matrixcustomhandlers {
 			}
 			catch (IOError e) {
 				System.setOut(console);
-				System.out.println("IO Error: " + e);
+				System.out.println(e);
 			}
 			catch (FileNotFoundException e) {
 				System.setOut(console);
-				System.out.println("File Not Found Exception: " + e);
+				System.out.println(e);
 			}
 			catch (MatrixOutOfBoundsException e) {
 				System.setOut(console);
-				System.out.println("Matrix Out of Bounds Exception: " + e);
+				System.out.println(e);
 			}
 			catch (UserInputException e) {
 				System.setOut(console);
-				System.out.println("User Input Exception: " + e);
+				System.out.println(e);
 			}
 		}
 	}
