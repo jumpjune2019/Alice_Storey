@@ -22,7 +22,6 @@ public class ThreadControl {
 		boolean suspended;
 		boolean stopped;
 		boolean exit;
-		int index = 0;
 		int count;
 		MyThread(String name) {
 			thrd = new Thread(this, name);
@@ -41,9 +40,6 @@ public class ThreadControl {
 			return getName();
 		}
 		
-		public void setIndex(int index) {
-			this.index = index;
-		}
 		
 		// Begin execution of new thread.
 		public void run() {
