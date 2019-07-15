@@ -1,0 +1,54 @@
+Extra work (Java 005) - Optional
+
+Create a class which can use the enumeration as a means of creating calculations.
+
+Create an enumeration of US Dollar Coins
+
+penny
+nickel
+dime
+quarter
+half dollar
+dollar
+
+So, you would have a class to handle the overall "Money Object"
+
+Money.setPenny()
+Money.setNickel()
+...
+
+Note: internally, this class handles the enum.
+
+Another class to handle the enumeration
+
+For example
+
+CountMoney cm = new CountMoney(); <-- this class knows how to deal with output and potential gotchas and errors
+
+And your Money object could be passed into your cm.setMoney(money)
+
+So, set you want something like this:
+
+money = Money.setPenny(2);
+money = Money.setNickel(2);
+money = Money.setDime(2);
+money = Money.setDollar(2)
+
+cm.setMoney(money)
+
+The return would be:
+
+cm.returnRaw() > 2.32
+cm.returnPretty() > "2 dollars and 32 cents"
+cm.returnCurrenty() > $.2.32
+
+cm.setMoney() <-- no parameters returns
+
+cm.returnRaw() > 0
+cm.returnPretty() > "no money has been set"
+cm.returnCurrency > "no money has been set"
+
+
+Use custom exception handlers to ensure you have the correct 'error' handling
+
+Encapsulate in the class the ability to ensure we can short form the enumeration (? static import)
