@@ -1,5 +1,9 @@
-.settings
+
+**/class
+*.class
+.apt_generated
+.classpath
+.factorypath
 .project
-java_training/assignments/java_003/matrixchoice/dicelabels.txt
-java_training/assignments/java_003/matrixchoice/dice_labels.txt
-java_training/assignments/java_003/phone/phone.txt
+.settings
+.springBeans
