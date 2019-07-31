@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -11,11 +12,11 @@ import javax.swing.SwingUtilities;
 public class Main {
 	private static Room room;
 	private static ClientStore myStore;
-	private static int width = 700;
-	private static int height = 500;
+	private static int width = 1200;
+	private static int height = 1000;
 	private static ListControl listControl;
 	private static ButtonControl buttonControl;
-	private static final String TITLE="My 2nd Matrix Demo";
+	private static final String TITLE="Seat Booking App Demo";
 	
 	public static void startApp() {
 		System.out.println("startApp()");
@@ -38,6 +39,7 @@ public class Main {
 	public static JLabel setHeaderLabel(JFrame frame) {
 		
 		JLabel headerLabel = new JLabel(TITLE, JLabel.CENTER);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		JPanel headerPanel = new JPanel();
 		headerPanel.setSize(width, 30);
 		headerPanel.add(headerLabel);
@@ -48,12 +50,14 @@ public class Main {
 	
 	public static JFrame setupFrame(JFrame frame, int onExit) {
 		centerAndSizeJFrameOnScreen(frame, width, height);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(onExit);
 		
 		setHeaderLabel(frame);
 		
 		listControl = new ListControl(width, height);
 		listControl.populate(myStore);		
+		listControl.sort();
 		listControl.addTo(frame, BorderLayout.WEST);
 		
 		buttonControl = new ButtonControl(room, listControl);
@@ -86,7 +90,7 @@ public class Main {
 		// and at least get an accurate count of the rows loaded in
 		//System.out.println("- Testing the ClientStore class\n");
 		myStore = new ClientStore("clients_list.csv");
-		room = new Room(5,5);
+		room = new Room(10,10);
 		
 		
 		//code below would randomly assign clients to seats for testing purposes / pass 1
