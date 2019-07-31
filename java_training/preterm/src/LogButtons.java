@@ -1,6 +1,8 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +21,11 @@ public class LogButtons implements ActionListener {
 		this.listControl = listControl;
 		this.store = store;
 		buttonReset = new JButton("Reset");
+		buttonReset.setBackground(new Color(131, 199, 199));
+		buttonReset.setBorder(BorderFactory.createRaisedBevelBorder());
 		buttonLog = new JButton("Print to Console");
+		buttonLog.setBackground(new Color(131, 199, 199));
+		buttonLog.setBorder(BorderFactory.createRaisedBevelBorder());
 		panel.add(buttonReset);
 		panel.add(buttonLog);
 		buttonReset.addActionListener(this);
